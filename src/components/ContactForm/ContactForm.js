@@ -9,14 +9,17 @@ const ContactForm = ({ onAddContact }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     if (!name.trim() || !number.trim()) {
       setError('Both fields are required.');
       return;
     }
+    
     if (name.length < 3) {
       setError('Name must be at least 3 characters long.');
       return;
     }
+    
     if (number.length < 7) {
       setError('Number must be at least 7 digits long.');
       return;

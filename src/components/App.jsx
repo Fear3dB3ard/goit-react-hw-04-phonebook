@@ -13,7 +13,6 @@ const App = () => {
     try {
       const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
       setContacts(storedContacts);
-      console.log('Loaded contacts from localStorage:', storedContacts); 
     } catch (error) {
       console.error('Failed to load contacts from localStorage:', error);
     }
@@ -22,7 +21,6 @@ const App = () => {
   useEffect(() => {
     try {
       localStorage.setItem('contacts', JSON.stringify(contacts));
-      console.log('Contacts saved to localStorage:', contacts); 
     } catch (error) {
       console.error('Failed to save contacts to localStorage:', error);
     }
@@ -36,13 +34,11 @@ const App = () => {
       return;
     }
 
-    const newContact = { id: nanoid(), name, number };
-    setContacts(prevContacts => [...prevContacts, newContact]);
+    setContacts(prevContacts => [...prevContacts, { id: nanoid(), name, number }]);
   };
 
   const handleDeleteContact = (id) => {
-    const updatedContacts = contacts.filter(contact => contact.id !== id);
-    setContacts(updatedContacts);
+    setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
   };
 
   const handleFilterChange = (event) => {
