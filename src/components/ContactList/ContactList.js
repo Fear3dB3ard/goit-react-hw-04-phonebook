@@ -8,7 +8,11 @@ const ContactList = ({ contacts, onDeleteContact }) => {
       {contacts.map(contact => (
         <li key={contact.id} className={styles.contactItem}>
           <span>{contact.name} - {contact.number}</span>
-          <button onClick={() => onDeleteContact(contact.id)} className={styles.deleteBtn}>
+          <button 
+            onClick={() => onDeleteContact(contact.id)} 
+            className={styles.deleteBtn}
+            aria-label={`Delete ${contact.name}`}
+          >
             Delete
           </button>
         </li>

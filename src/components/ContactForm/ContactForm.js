@@ -5,13 +5,27 @@ import styles from './ContactForm.module.css';
 const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!name.trim() || !number.trim()) return;
+    if (!name.trim() || !number.trim()) {
+      setError('Both fields are required.');
+      return;
+    }
+    if (name.length < 3) {
+      setError('Name must be at least 3 characters long.');
+      return;
+    }
+    if (number.length < 7) {
+      setError('Number must be at least 7 digits long.');
+      return;
+    }
+
     onAddContact(name, number);
     setName('');
     setNumber('');
+    setError('');
   };
 
   return (
@@ -22,7 +36,7 @@ const ContactForm = ({ onAddContact }) => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         pattern="^[a-zA-Z][a-zA-Z '-]*$"
-        title="Name may contain only letters, apostrophes, dashes, and spaces. For example: Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        title="Name may contain only letters, apostrophes, dashes, and spaces."
         required
         placeholder="Name"
       />
@@ -36,6 +50,7 @@ const ContactForm = ({ onAddContact }) => {
         required
         placeholder="Phone number"
       />
+      {error && <p className={styles.error}>{error}</p>}
       <button type="submit">Add Contact</button>
     </form>
   );

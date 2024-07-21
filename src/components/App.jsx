@@ -9,17 +9,23 @@ const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
-  // Load contacts from localStorage on component mount
   useEffect(() => {
-    const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
-    setContacts(storedContacts);
-    console.log('Loaded contacts from localStorage:', storedContacts); // Log the contacts loaded from localStorage
+    try {
+      const storedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
+      setContacts(storedContacts);
+      console.log('Loaded contacts from localStorage:', storedContacts); 
+    } catch (error) {
+      console.error('Failed to load contacts from localStorage:', error);
+    }
   }, []);
 
-  // Save contacts to localStorage whenever contacts state changes
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-    console.log('Contacts saved to localStorage:', contacts); // Log the contacts saved to localStorage
+    try {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      console.log('Contacts saved to localStorage:', contacts); 
+    } catch (error) {
+      console.error('Failed to save contacts to localStorage:', error);
+    }
   }, [contacts]);
 
   const handleAddContact = (name, number) => {
